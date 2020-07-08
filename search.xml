@@ -238,7 +238,7 @@
 <li>jdk8</li>
 <li>maven3.6</li>
 </ul>
-<h3 id="如何整合"><a href="#如何整合" class="headerlink" title="如何整合"></a>如何整合</h3><p>spring的优势是IoC/DI，mybatis则是避免书写JDBC代码。那么我们可以把mybatis的sqlSession对象以及数据映射对象交给spring管理，仅配置java对象和映射文件即可。<br>在这个过程中，仅数据库驱动包、spring框架包和mybatis包是不够的，还需要<a href="http://mybatis.org/spring/zh/index.html" target="_blank" rel="noopener">mybatis-spring</a>这个整合包，通过这个包的功能来把SqlSessionFactory配置给spring。各部分对应版本在文档简介部分有说明。</p>
+<h3 id="如何整合"><a href="#如何整合" class="headerlink" title="如何整合"></a>如何整合</h3><p>spring的优势是IoC/DI，mybatis则是避免书写JDBC代码。那么我们可以把mybatis的sqlSession对象以及数据映射对象交给spring管理，仅配置java对象和映射文件即可。<br>在这个过程中，仅数据库驱动包、spring框架包和mybatis包是不够的，还需要<span class="exturl" data-url="aHR0cDovL215YmF0aXMub3JnL3NwcmluZy96aC9pbmRleC5odG1s">mybatis-spring<i class="fa fa-external-link-alt"></i></span>这个整合包，通过这个包的功能来把SqlSessionFactory配置给spring。各部分对应版本在文档简介部分有说明。</p>
 <h3 id="整合步骤"><a href="#整合步骤" class="headerlink" title="整合步骤"></a>整合步骤</h3><h4 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h4><p>首先需要数据库建表，这里参考<a href="/mybatis/mybatis-association-query/#1-创建数据表-amp-插入数据">char_info</a>表</p>
 <h4 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h4><p>需要使用的jar依赖如下</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">spring.version</span>&gt;</span>4.3.18.RELEASE<span class="tag">&lt;/<span class="name">spring.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--spring相关--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;spring.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--数据库驱动--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.38<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--mybatis--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--整合包--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--测试--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>4.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -278,7 +278,7 @@
 </blockquote>
 <a id="more"></a>
 
-<p><a href="http://shiro.apache.org/" target="_blank" rel="noopener">官网</a>上有个10 Minute Tutorial（10分钟教程），方便我们快速入门shiro</p>
+<p><span class="exturl" data-url="aHR0cDovL3NoaXJvLmFwYWNoZS5vcmcv">官网<i class="fa fa-external-link-alt"></i></span>上有个10 Minute Tutorial（10分钟教程），方便我们快速入门shiro</p>
 <p>目前的版本：<img src="https://img.shields.io/maven-central/v/org.apache.shiro/shiro-core.svg" alt="Maven Central" style="max-width:100%;"></p>
 <hr>
 <h4 id="shiro核心概述"><a href="#shiro核心概述" class="headerlink" title="shiro核心概述"></a>shiro核心概述</h4><p>在最高的概念层次上，Shiro的架构有三个主要概念：<strong>Subject</strong>、<strong>SecurityManager</strong>和<strong>Realms</strong>。下图来自官网。</p>
@@ -367,7 +367,7 @@
 <h3 id="四、整合mybatis"><a href="#四、整合mybatis" class="headerlink" title="四、整合mybatis"></a>四、整合mybatis</h3><p>经过上面的配置后，shiro的权限验证就基本完成了，下面使用mybatis接入数据</p>
 <p>首先准备一个user表</p>
 <p><img src="image-20200629171705485.png" alt="image-20200629171705485"></p>
-<p>然后使用<a href="https://plugins.jetbrains.com/plugin/8321-free-mybatis-plugin" target="_blank" rel="noopener">Free MyBatis plugin</a>插件生成对应的实体类、DAO接口、xml文件</p>
+<p>然后使用<span class="exturl" data-url="aHR0cHM6Ly9wbHVnaW5zLmpldGJyYWlucy5jb20vcGx1Z2luLzgzMjEtZnJlZS1teWJhdGlzLXBsdWdpbg==">Free MyBatis plugin<i class="fa fa-external-link-alt"></i></span>插件生成对应的实体类、DAO接口、xml文件</p>
 <p>导入依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.38<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -384,7 +384,7 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> UserDao userDao;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">	System.out.println(<span class="string">"===验证==="</span>);</span><br><span class="line">	String username = (String) token.getPrincipal();</span><br><span class="line">	User user = userDao.selectByName(username);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (user != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> SimpleAuthenticationInfo(user, user.getPassword(), getName());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里省略了业务层，直接注入DAO。现在可以用数据库里用户名和对应的密码来登录了</p>
-<h3 id="五、授权"><a href="#五、授权" class="headerlink" title="五、授权"></a>五、授权</h3><h4 id="1、了解shiro中的权限（Permission）"><a href="#1、了解shiro中的权限（Permission）" class="headerlink" title="1、了解shiro中的权限（Permission）"></a>1、了解shiro中的权限（Permission）</h4><p><a href="http://shiro.apache.org/permissions.html" target="_blank" rel="noopener">官网原文</a></p>
+<h3 id="五、授权"><a href="#五、授权" class="headerlink" title="五、授权"></a>五、授权</h3><h4 id="1、了解shiro中的权限（Permission）"><a href="#1、了解shiro中的权限（Permission）" class="headerlink" title="1、了解shiro中的权限（Permission）"></a>1、了解shiro中的权限（Permission）</h4><p><span class="exturl" data-url="aHR0cDovL3NoaXJvLmFwYWNoZS5vcmcvcGVybWlzc2lvbnMuaHRtbA==">官网原文<i class="fa fa-external-link-alt"></i></span></p>
 <blockquote>
 <p>shiro将权限或操作定义为显式操作的语句。它只是对应用程序中原始功能的陈述。权限是安全策略中最底层的构造，它们只显式定义应用程序可以做什么。它们并没有描述“谁”能够执行这些操作。</p>
 <p>定义允许“谁”（用户）做“什么”（权限）是以某种方式向用户分配权限的练习。这通常是由应用程序的数据模型完成的，并且在不同的应用程序中可能会有很大的差异。</p>
@@ -425,7 +425,7 @@
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/login&#125;"</span> <span class="attr">shiro:notAuthenticated</span>=<span class="string">""</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/user/add&#125;"</span> <span class="attr">shiro:hasPermission</span>=<span class="string">"user:add"</span>&gt;</span>添加用户<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">th:href</span>=<span class="string">"@&#123;/user/update&#125;"</span> <span class="attr">shiro:hasPermission</span>=<span class="string">"user:update"</span>&gt;</span>修改用户<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>现在启动程序，未登录或无相应权限时不会显示添加用户、修改用户的a标签，登录后不会显示登录的a标签</p>
-<h3 id="附：基于starter的快速配置方式"><a href="#附：基于starter的快速配置方式" class="headerlink" title="附：基于starter的快速配置方式"></a>附：基于starter的快速配置方式</h3><p>按照<a href="http://shiro.apache.org/spring-boot.html" target="_blank" rel="noopener">官方的整合说明</a>，推荐的配置方式如下</p>
+<h3 id="附：基于starter的快速配置方式"><a href="#附：基于starter的快速配置方式" class="headerlink" title="附：基于starter的快速配置方式"></a>附：基于starter的快速配置方式</h3><p>按照<span class="exturl" data-url="aHR0cDovL3NoaXJvLmFwYWNoZS5vcmcvc3ByaW5nLWJvb3QuaHRtbA==">官方的整合说明<i class="fa fa-external-link-alt"></i></span>，推荐的配置方式如下</p>
 <p>还是使用配置类，这里不需要额外添加<code>securityManager</code>了</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShiroConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Realm <span class="title">realm</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MyRealm();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ShiroFilterChainDefinition <span class="title">shiroFilterChainDefinition</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		DefaultShiroFilterChainDefinition definition = <span class="keyword">new</span> DefaultShiroFilterChainDefinition();</span><br><span class="line"></span><br><span class="line">		definition.addPathDefinition(<span class="string">"/user/add"</span>, <span class="string">"perms[user:add]"</span>);</span><br><span class="line">		definition.addPathDefinition(<span class="string">"/user/update"</span>, <span class="string">"perms[user:update]"</span>);</span><br><span class="line">		definition.addPathDefinition(<span class="string">"/user/**"</span>, <span class="string">"authc"</span>);</span><br><span class="line">		System.out.println(<span class="string">"shiroFilterChainDefinition"</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> definition;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -445,21 +445,21 @@
   <entry>
     <title>Spring Boot中的Spring MVC详解</title>
     <url>/springboot/springboot-springmvc/</url>
-    <content><![CDATA[<h2 id="一、官方文档介绍"><a href="#一、官方文档介绍" class="headerlink" title="一、官方文档介绍"></a>一、官方文档介绍</h2><p>以下内容引用自<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc" target="_blank" rel="noopener">官方文档</a>，机翻并进行手动修正，部分内容已省略</p>
+    <content><![CDATA[<h2 id="一、官方文档介绍"><a href="#一、官方文档介绍" class="headerlink" title="一、官方文档介绍"></a>一、官方文档介绍</h2><p>以下内容引用自<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yw==">官方文档<i class="fa fa-external-link-alt"></i></span>，机翻并进行手动修正，部分内容已省略</p>
 <a id="more"></a>
 
 <h3 id="1、Spring-MVC的自动化配置"><a href="#1、Spring-MVC的自动化配置" class="headerlink" title="1、Spring MVC的自动化配置"></a>1、Spring MVC的自动化配置</h3><p>Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。自动配置在Spring默认设置的基础上添加了以下功能：</p>
 <ul>
 <li>包含<code>contentnegotingviewresolver</code>和<code>beannameviewsolver</code>beans</li>
-<li>支持服务静态资源，包括支持Webjars（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-static-content" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持服务静态资源，包括支持Webjars（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1zdGF0aWMtY29udGVudA==">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 <li>自动注册<code>Converter</code>，<code>GenericConverter</code>和<code>Formatter</code>beans</li>
-<li>支持<code>HttpMessageConverters</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-message-converters" target="_blank" rel="noopener">链接</a>）</li>
-<li>自动注册<code>MessageCodesResolver</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-message-codes" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持<code>HttpMessageConverters</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1tZXNzYWdlLWNvbnZlcnRlcnM=">链接<i class="fa fa-external-link-alt"></i></span>）</li>
+<li>自动注册<code>MessageCodesResolver</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW1lc3NhZ2UtY29kZXM=">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 <li>支持静态的<code>index.html</code></li>
-<li>支持自定义<code>Favicon</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-favicon" target="_blank" rel="noopener">链接</a>）</li>
-<li>自动使用一个<code>ConfigurableWebBindingInitializer</code>bean（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-web-binding-initializer" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持自定义<code>Favicon</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1mYXZpY29u">链接<i class="fa fa-external-link-alt"></i></span>）</li>
+<li>自动使用一个<code>ConfigurableWebBindingInitializer</code>bean（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy13ZWItYmluZGluZy1pbml0aWFsaXplcg==">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 </ul>
-<p>如果您想保留这些Spring Boot MVC的自定义配置并进行更多的<a href="https://docs.spring.io/spring/docs/5.2.6.RELEASE/spring-framework-reference/web.html#mvc" target="_blank" rel="noopener">MVC自定义</a>（拦截器、格式化程序、视图控制器和其他功能），可以在自己的类上添加<code>@Configuration</code>注解，（继承）类型为<code>WebMvcConfigurer</code>，但不要添加<code>@EnableWebMvc</code>注解。</p>
+<p>如果您想保留这些Spring Boot MVC的自定义配置并进行更多的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmcvZG9jcy81LjIuNi5SRUxFQVNFL3NwcmluZy1mcmFtZXdvcmstcmVmZXJlbmNlL3dlYi5odG1sI212Yw==">MVC自定义<i class="fa fa-external-link-alt"></i></span>（拦截器、格式化程序、视图控制器和其他功能），可以在自己的类上添加<code>@Configuration</code>注解，（继承）类型为<code>WebMvcConfigurer</code>，但不要添加<code>@EnableWebMvc</code>注解。</p>
 <p>如果你想提供<code>RequestMappingHandlerMapping</code>、<code>RequestMappingHandlerAdapter</code>或<code>ExceptionHandlerExceptionResolver</code>的自定义实例，并且仍然保留Spring Boot MVC的自定义配置，则可以声明<code>WebMVCregistration</code>类型的bean，并使用它来提供这些组件的自定义实例。</p>
 <p>如果您想完全控制Spring MVC，可以在自己的类上添加<code>@Configuration</code>和<code>@EnableWebMvc</code>注解，或者添加你自己的<code>@Configuration</code>注释<code>DelegatingWebMvcConfiguration</code>配置，如<code>@EnableWebMvc</code>的Javadoc所述。</p>
 <h3 id="2、静态内容"><a href="#2、静态内容" class="headerlink" title="2、静态内容"></a>2、静态内容</h3><p>默认情况下，Spring Boot从类路径中名为<code>/static</code>（或<code>/public</code>或<code>/resources</code>或<code>/META-INF/resources</code>）的目录或<code>ServletContext</code>的根目录中提供静态内容。它使用来自Spring MVC的<code>ResourceHttpRequestHandler</code>，这样您就可以通过添加自己的<code>WebMvcConfigurer</code>和重写<code>addResourceHandlers</code>方法来修改该行为。</p>
@@ -468,7 +468,7 @@
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="meta">spring.mvc.static-path-pattern</span>=<span class="string">/resources/**</span></span><br></pre></td></tr></table></figure>
 
 <p>你还可以使用<code>spring.resources.static-locations</code>属性（用目录位置列表替换默认值）自定义静态资源位置。根Servlet上下文路径<code>“/”</code>也会被自动添加为一个位置。</p>
-<p>除了前面提到的“标准”静态资源位置之外，还有一个特殊情况：<a href="https://www.webjars.org/" target="_blank" rel="noopener">Webjars content</a>。如果jar文件是以Webjars格式打包的，那么路径为<code>/webjars/**</code>的任何资源都可以从jar文件中获得。</p>
+<p>除了前面提到的“标准”静态资源位置之外，还有一个特殊情况：<span class="exturl" data-url="aHR0cHM6Ly93d3cud2ViamFycy5vcmcv">Webjars content<i class="fa fa-external-link-alt"></i></span>。如果jar文件是以Webjars格式打包的，那么路径为<code>/webjars/**</code>的任何资源都可以从jar文件中获得。</p>
 <blockquote>
 <p>如果应用程序打包为jar，请不要使用src/main/webapp目录。尽管这个目录是一个通用的标准，但它只适用于war包，如果生成jar包，大多数构建工具都会默认忽略它。</p>
 </blockquote>
@@ -585,7 +585,7 @@
 
 <p>所有依赖关系如下</p>
 <p><img src="4260633758.png" alt="img"></p>
-<h3 id="5、使用插件生成mybatis所需类与xml文件"><a href="#5、使用插件生成mybatis所需类与xml文件" class="headerlink" title="5、使用插件生成mybatis所需类与xml文件"></a>5、使用插件生成mybatis所需类与xml文件</h3><p>这里使用的idea插件是<a href="https://plugins.jetbrains.com/plugin/8321-free-mybatis-plugin" target="_blank" rel="noopener">Free MyBatis plugin</a>。在idea配置好数据库连接后，右键char_info表，选择mybatis-generator，然后设置如下</p>
+<h3 id="5、使用插件生成mybatis所需类与xml文件"><a href="#5、使用插件生成mybatis所需类与xml文件" class="headerlink" title="5、使用插件生成mybatis所需类与xml文件"></a>5、使用插件生成mybatis所需类与xml文件</h3><p>这里使用的idea插件是<span class="exturl" data-url="aHR0cHM6Ly9wbHVnaW5zLmpldGJyYWlucy5jb20vcGx1Z2luLzgzMjEtZnJlZS1teWJhdGlzLXBsdWdpbg==">Free MyBatis plugin<i class="fa fa-external-link-alt"></i></span>。在idea配置好数据库连接后，右键char_info表，选择mybatis-generator，然后设置如下</p>
 <p><img src="560481680.png" alt="img"></p>
 <p>此时会在项目main目录中生成如下文件</p>
 <p><img src="1778991020.png" alt="img"></p>
@@ -681,7 +681,7 @@
   <entry>
     <title>Vue-cli学习笔记</title>
     <url>/vue/vue-cli-learn/</url>
-    <content><![CDATA[<p><strong>此笔记对应视频：</strong><a href="https://www.bilibili.com/video/BV18E411a7mC" target="_blank" rel="noopener">【狂神说Java】Vue最新快速上手教程通俗易懂</a>P13-P19</p>
+    <content><![CDATA[<p><strong>此笔记对应视频：</strong><span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMThFNDExYTdtQw==">【狂神说Java】Vue最新快速上手教程通俗易懂<i class="fa fa-external-link-alt"></i></span>P13-P19</p>
 <a id="more"></a>
 
 <hr>
@@ -690,7 +690,7 @@
 <p>vue-cli是一个基于Vue.js进行快速开发的完整系统，是Vue.js开发的标准工具，可以认为它是vue构建项目的脚手架，能够进行组件式开发。</p>
 <h2 id="二、准备工作"><a href="#二、准备工作" class="headerlink" title="二、准备工作"></a>二、准备工作</h2><h3 id="1、环境需求"><a href="#1、环境需求" class="headerlink" title="1、环境需求"></a>1、环境需求</h3><p>要使用vue-cli 2.x，需要以下前提条件：</p>
 <ul>
-<li><p><a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js</a>（版本6.x以上）</p>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL3poLWNuL2Rvd25sb2FkLw==">Node.js<i class="fa fa-external-link-alt"></i></span>（版本6.x以上）</p>
 </li>
 <li><p>npm（版本3以上，Node.js已包含 npm）</p>
 <blockquote>
@@ -701,7 +701,7 @@
 </li>
 </ul>
 <p>可以使用安装包(.msi)傻瓜式安装，也可以使用二进制文件（推荐）免安装，解压后将其根目录添加到<code>Path</code>环境变量即可</p>
-<h3 id="2、使用淘宝npm镜像"><a href="#2、使用淘宝npm镜像" class="headerlink" title="2、使用淘宝npm镜像"></a>2、使用淘宝npm镜像</h3><p>直接使用npm安装模块会走国外的地址，比较慢，推荐使用<a href="https://developer.aliyun.com/mirror/NPM" target="_blank" rel="noopener">淘宝npm镜像</a>，可以用此代替官方版本(只读)，同步频率目前为10分钟一次以保证尽量与官方服务同步。使用如下命令来安装</p>
+<h3 id="2、使用淘宝npm镜像"><a href="#2、使用淘宝npm镜像" class="headerlink" title="2、使用淘宝npm镜像"></a>2、使用淘宝npm镜像</h3><p>直接使用npm安装模块会走国外的地址，比较慢，推荐使用<span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYWxpeXVuLmNvbS9taXJyb3IvTlBN">淘宝npm镜像<i class="fa fa-external-link-alt"></i></span>，可以用此代替官方版本(只读)，同步频率目前为10分钟一次以保证尽量与官方服务同步。使用如下命令来安装</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
 
 <p>然后就可以使用cnpm来安装模块了</p>
@@ -774,7 +774,7 @@
 <blockquote>
 <p>本质上，<em>webpack</em> 是一个现代 JavaScript 应用程序的<em>静态模块打包器(module bundler)</em>。当 webpack 处理应用程序时，它会递归地构建一个<em>依赖关系图(dependency graph)</em>，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 <em>bundle</em>。</p>
 </blockquote>
-<p><a href="https://www.webpackjs.com/" target="_blank" rel="noopener">官网</a>横幅十分形象的展示了webpack的作用</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cud2VicGFja2pzLmNvbS8=">官网<i class="fa fa-external-link-alt"></i></span>横幅十分形象的展示了webpack的作用</p>
 <p>![](GIF 2020-6-20 17-03-41.gif)</p>
 <h3 id="2、安装webpack"><a href="#2、安装webpack" class="headerlink" title="2、安装webpack"></a>2、安装webpack</h3><p>目前webpack的版本是</p>
 <p><a href="https://github.com/webpack/webpack/releases" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/webpack.svg?label=webpack&amp;style=flat-square&amp;maxAge=3600" alt="GitHub release"></a></p>
@@ -825,7 +825,7 @@
 <p>点击后</p>
 <p><img src="image-20200620185716538.png" alt="image-20200620185716538"></p>
 <h2 id="六、在vue-cli中使用element-ui"><a href="#六、在vue-cli中使用element-ui" class="headerlink" title="六、在vue-cli中使用element-ui"></a>六、在vue-cli中使用element-ui</h2><blockquote>
-<p><a href="https://element.eleme.cn/#/zh-CN" target="_blank" rel="noopener">Element-Ul</a>是饿了么前端团队推出的一款基于Vue.js 2.0的桌面端UI框架，一套为开发者、设计师和产品经理准备的基于Vue 2.0的桌面端组件库</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9lbGVtZW50LmVsZW1lLmNuLyMvemgtQ04=">Element-Ul<i class="fa fa-external-link-alt"></i></span>是饿了么前端团队推出的一款基于Vue.js 2.0的桌面端UI框架，一套为开发者、设计师和产品经理准备的基于Vue 2.0的桌面端组件库</p>
 </blockquote>
 <p>安装（i是instal的简写，S是save的简写）</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i element-ui -S</span><br></pre></td></tr></table></figure>
@@ -952,23 +952,23 @@
   <entry>
     <title>Vue学习笔记</title>
     <url>/vue/vue-learn/</url>
-    <content><![CDATA[<p><strong>此笔记对应视频：<a href="https://www.bilibili.com/video/BV18E411a7mC" target="_blank" rel="noopener">【狂神说Java】Vue最新快速上手教程通俗易懂</a></strong>前12P</p>
+    <content><![CDATA[<p><strong>此笔记对应视频：<span class="exturl" data-url="aHR0cHM6Ly93d3cuYmlsaWJpbGkuY29tL3ZpZGVvL0JWMThFNDExYTdtQw==">【狂神说Java】Vue最新快速上手教程通俗易懂<i class="fa fa-external-link-alt"></i></span></strong>前12P</p>
 <hr>
 <h3 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h3><blockquote>
 <p>Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动。</p>
 </blockquote>
 <a id="more"></a>
 
-<h3 id="二、如何使用"><a href="#二、如何使用" class="headerlink" title="二、如何使用"></a>二、如何使用</h3><h4 id="1、下载到本地并使用-lt-script-gt-引入"><a href="#1、下载到本地并使用-lt-script-gt-引入" class="headerlink" title="1、下载到本地并使用&lt;script&gt;引入"></a>1、下载到本地并使用<code>&lt;script&gt;</code>引入</h4><p><a href="https://cn.vuejs.org/js/vue.js" target="_blank" rel="noopener">开发版本</a>：包含完整的警告和调试模式</p>
-<p><a href="https://cn.vuejs.org/js/vue.min.js" target="_blank" rel="noopener">生产版本</a>：压缩后的代码，删除了警告，&lt;100KB</p>
+<h3 id="二、如何使用"><a href="#二、如何使用" class="headerlink" title="二、如何使用"></a>二、如何使用</h3><h4 id="1、下载到本地并使用-lt-script-gt-引入"><a href="#1、下载到本地并使用-lt-script-gt-引入" class="headerlink" title="1、下载到本地并使用&lt;script&gt;引入"></a>1、下载到本地并使用<code>&lt;script&gt;</code>引入</h4><p><span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvanMvdnVlLmpz">开发版本<i class="fa fa-external-link-alt"></i></span>：包含完整的警告和调试模式</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jbi52dWVqcy5vcmcvanMvdnVlLm1pbi5qcw==">生产版本<i class="fa fa-external-link-alt"></i></span>：压缩后的代码，删除了警告，&lt;100KB</p>
 <h4 id="2、使用CDN引用（推荐）"><a href="#2、使用CDN引用（推荐）" class="headerlink" title="2、使用CDN引用（推荐）"></a>2、使用CDN引用（推荐）</h4><p>例如：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/vue/dist/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>一些提供CDN服务的网站：</p>
 <ul>
-<li><a href="https://www.bootcdn.cn" target="_blank" rel="noopener">https://www.bootcdn.cn</a></li>
-<li><a href="https://www.staticfile.org" target="_blank" rel="noopener">https://www.staticfile.org</a></li>
-<li><a href="https://cdnjs.com/" target="_blank" rel="noopener">https://cdnjs.com/</a> (国外)</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuYm9vdGNkbi5jbg==">https://www.bootcdn.cn<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuc3RhdGljZmlsZS5vcmc=">https://www.staticfile.org<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jZG5qcy5jb20v">https://cdnjs.com/<i class="fa fa-external-link-alt"></i></span> (国外)</li>
 </ul>
 <h3 id="三、第一个Vue程序"><a href="#三、第一个Vue程序" class="headerlink" title="三、第一个Vue程序"></a>三、第一个Vue程序</h3><p>步骤：先创建一个HTML5文件，在body下方使用script标签引入vue。在下面一个script标签里new一个Vue对象，变量名随意。然后增加一个el参数，值为<code>#app</code>，对应body体里的div标签，下一个参数data使用json格式数据，里面可以自定义key-value对。然后在div中使用双大括号引用这个数据，代码如下</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>hello vue<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">		&#123;&#123;message&#125;&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.staticfile.org/vue/2.6.11/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">	<span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="actionscript">		el: <span class="string">"#app"</span>,</span></span><br><span class="line">		data: &#123;</span><br><span class="line"><span class="actionscript">			message: <span class="string">"hello vue!"</span></span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>

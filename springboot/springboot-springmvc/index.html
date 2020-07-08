@@ -9,6 +9,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="pdp4HsKo9i">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -17,7 +20,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"voidsoul0.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","width":200,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"voidsoul0.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":true,"sidebar":{"position":"left","width":220,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="一、官方文档介绍以下内容引用自官方文档，机翻并进行手动修正，部分内容已省略">
@@ -117,6 +120,7 @@
       <h1 class="site-title">Lv.0</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">talk is cheap, show me the code</p>
   </div>
 
   <div class="site-nav-right">
@@ -242,14 +246,14 @@
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/VoidSoul0" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;VoidSoul0" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1ZvaWRTb3VsMA==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;VoidSoul0"><i class="fab fa-github fa-fw"></i></span>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:360301524@qq.com" title="E-Mail → mailto:360301524@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <span class="exturl" data-url="bWFpbHRvOjM2MDMwMTUyNEBxcS5jb20=" title="E-Mail → mailto:360301524@qq.com"><i class="fa fa-envelope fa-fw"></i></span>
       </span>
   </div>
   <div class="cc-license animated" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></span>
   </div>
 
 
@@ -319,6 +323,27 @@
             </span>
 
           
+            <span id="/springboot/springboot-springmvc/" class="post-meta-item leancloud_visitors" data-flag-title="Spring Boot中的Spring MVC详解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/springboot/springboot-springmvc/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/springboot/springboot-springmvc/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -341,21 +366,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="一、官方文档介绍"><a href="#一、官方文档介绍" class="headerlink" title="一、官方文档介绍"></a>一、官方文档介绍</h2><p>以下内容引用自<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc" target="_blank" rel="noopener">官方文档</a>，机翻并进行手动修正，部分内容已省略</p>
+        <h2 id="一、官方文档介绍"><a href="#一、官方文档介绍" class="headerlink" title="一、官方文档介绍"></a>一、官方文档介绍</h2><p>以下内容引用自<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yw==">官方文档<i class="fa fa-external-link-alt"></i></span>，机翻并进行手动修正，部分内容已省略</p>
 <a id="more"></a>
 
 <h3 id="1、Spring-MVC的自动化配置"><a href="#1、Spring-MVC的自动化配置" class="headerlink" title="1、Spring MVC的自动化配置"></a>1、Spring MVC的自动化配置</h3><p>Spring Boot为Spring MVC提供了自动配置，它可以很好地与大多数应用程序一起工作。自动配置在Spring默认设置的基础上添加了以下功能：</p>
 <ul>
 <li>包含<code>contentnegotingviewresolver</code>和<code>beannameviewsolver</code>beans</li>
-<li>支持服务静态资源，包括支持Webjars（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-static-content" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持服务静态资源，包括支持Webjars（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1zdGF0aWMtY29udGVudA==">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 <li>自动注册<code>Converter</code>，<code>GenericConverter</code>和<code>Formatter</code>beans</li>
-<li>支持<code>HttpMessageConverters</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-message-converters" target="_blank" rel="noopener">链接</a>）</li>
-<li>自动注册<code>MessageCodesResolver</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-message-codes" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持<code>HttpMessageConverters</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1tZXNzYWdlLWNvbnZlcnRlcnM=">链接<i class="fa fa-external-link-alt"></i></span>）</li>
+<li>自动注册<code>MessageCodesResolver</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW1lc3NhZ2UtY29kZXM=">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 <li>支持静态的<code>index.html</code></li>
-<li>支持自定义<code>Favicon</code>（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-favicon" target="_blank" rel="noopener">链接</a>）</li>
-<li>自动使用一个<code>ConfigurableWebBindingInitializer</code>bean（参考<a href="https://docs.spring.io/spring-boot/docs/2.2.7.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-web-binding-initializer" target="_blank" rel="noopener">链接</a>）</li>
+<li>支持自定义<code>Favicon</code>（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy1mYXZpY29u">链接<i class="fa fa-external-link-alt"></i></span>）</li>
+<li>自动使用一个<code>ConfigurableWebBindingInitializer</code>bean（参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmctYm9vdC9kb2NzLzIuMi43LlJFTEVBU0UvcmVmZXJlbmNlL2h0bWxzaW5nbGUvI2Jvb3QtZmVhdHVyZXMtc3ByaW5nLW12Yy13ZWItYmluZGluZy1pbml0aWFsaXplcg==">链接<i class="fa fa-external-link-alt"></i></span>）</li>
 </ul>
-<p>如果您想保留这些Spring Boot MVC的自定义配置并进行更多的<a href="https://docs.spring.io/spring/docs/5.2.6.RELEASE/spring-framework-reference/web.html#mvc" target="_blank" rel="noopener">MVC自定义</a>（拦截器、格式化程序、视图控制器和其他功能），可以在自己的类上添加<code>@Configuration</code>注解，（继承）类型为<code>WebMvcConfigurer</code>，但不要添加<code>@EnableWebMvc</code>注解。</p>
+<p>如果您想保留这些Spring Boot MVC的自定义配置并进行更多的<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnNwcmluZy5pby9zcHJpbmcvZG9jcy81LjIuNi5SRUxFQVNFL3NwcmluZy1mcmFtZXdvcmstcmVmZXJlbmNlL3dlYi5odG1sI212Yw==">MVC自定义<i class="fa fa-external-link-alt"></i></span>（拦截器、格式化程序、视图控制器和其他功能），可以在自己的类上添加<code>@Configuration</code>注解，（继承）类型为<code>WebMvcConfigurer</code>，但不要添加<code>@EnableWebMvc</code>注解。</p>
 <p>如果你想提供<code>RequestMappingHandlerMapping</code>、<code>RequestMappingHandlerAdapter</code>或<code>ExceptionHandlerExceptionResolver</code>的自定义实例，并且仍然保留Spring Boot MVC的自定义配置，则可以声明<code>WebMVCregistration</code>类型的bean，并使用它来提供这些组件的自定义实例。</p>
 <p>如果您想完全控制Spring MVC，可以在自己的类上添加<code>@Configuration</code>和<code>@EnableWebMvc</code>注解，或者添加你自己的<code>@Configuration</code>注释<code>DelegatingWebMvcConfiguration</code>配置，如<code>@EnableWebMvc</code>的Javadoc所述。</p>
 <h3 id="2、静态内容"><a href="#2、静态内容" class="headerlink" title="2、静态内容"></a>2、静态内容</h3><p>默认情况下，Spring Boot从类路径中名为<code>/static</code>（或<code>/public</code>或<code>/resources</code>或<code>/META-INF/resources</code>）的目录或<code>ServletContext</code>的根目录中提供静态内容。它使用来自Spring MVC的<code>ResourceHttpRequestHandler</code>，这样您就可以通过添加自己的<code>WebMvcConfigurer</code>和重写<code>addResourceHandlers</code>方法来修改该行为。</p>
@@ -364,7 +389,7 @@
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.static-path-pattern</span>=<span class="string">/resources/**</span></span><br></pre></td></tr></table></figure>
 
 <p>你还可以使用<code>spring.resources.static-locations</code>属性（用目录位置列表替换默认值）自定义静态资源位置。根Servlet上下文路径<code>“/”</code>也会被自动添加为一个位置。</p>
-<p>除了前面提到的“标准”静态资源位置之外，还有一个特殊情况：<a href="https://www.webjars.org/" target="_blank" rel="noopener">Webjars content</a>。如果jar文件是以Webjars格式打包的，那么路径为<code>/webjars/**</code>的任何资源都可以从jar文件中获得。</p>
+<p>除了前面提到的“标准”静态资源位置之外，还有一个特殊情况：<span class="exturl" data-url="aHR0cHM6Ly93d3cud2ViamFycy5vcmcv">Webjars content<i class="fa fa-external-link-alt"></i></span>。如果jar文件是以Webjars格式打包的，那么路径为<code>/webjars/**</code>的任何资源都可以从jar文件中获得。</p>
 <blockquote>
 <p>如果应用程序打包为jar，请不要使用src/main/webapp目录。尽管这个目录是一个通用的标准，但它只适用于war包，如果生成jar包，大多数构建工具都会默认忽略它。</p>
 </blockquote>
@@ -470,7 +495,7 @@
     <a href="https://voidsoul0.github.io/springboot/springboot-springmvc/" title="Spring Boot中的Spring MVC详解">https://voidsoul0.github.io/springboot/springboot-springmvc/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
@@ -508,6 +533,7 @@
 
         </div>
         
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -578,6 +604,15 @@
 
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -600,6 +635,19 @@
   
 
   
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"RnUFFHSLABgtaVxM0cDTfSqS-gzGzoHsz","appKey":"u4oJCfVFNQBlzzt2miaLqkoV","placeholder":"(」・ω・)」唔 -- (/・ω・)/喵---(」・ω・)」唔 --(/・ω・)/ 喵---","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"language":"zh-cn","visitor":true,"comment_count":false,"recordIP":true,"serverURLs":null}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
