@@ -1726,4 +1726,59 @@
         <tag>vue</tag>
       </tags>
   </entry>
+  <entry>
+    <title>CentOS7中Redis的安装与使用</title>
+    <url>/redis/centos-redis/</url>
+    <content><![CDATA[<h3 id="一、检查环境"><a href="#一、检查环境" class="headerlink" title="一、检查环境"></a>一、检查环境</h3><p>由于Rdis官方只提供了源码包，安装需要进行编译。而CentOS7自带的gcc版本为4.8.5，目前的Redis版本为6.0.5，直接编译安装会报错，所以需要升级一下gcc</p>
+<a id="more"></a>
+
+<p><img src="image-20200717153808662.png" alt="image-20200717153808662"></p>
+<h3 id="二、升级gcc"><a href="#二、升级gcc" class="headerlink" title="二、升级gcc"></a>二、升级gcc</h3><h4 id="1、yum安装"><a href="#1、yum安装" class="headerlink" title="1、yum安装"></a>1、yum安装</h4><p>先切换到/opt目录，依次执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install centos-release-scl</span><br><span class="line">yum install devtoolset-9-gcc*</span><br></pre></td></tr></table></figure>
+
+<p>途中会询问，输入y即可</p>
+<p><img src="image-20200717160709600.png" alt="image-20200717160709600"></p>
+<p><img src="image-20200717161107132.png" alt="image-20200717161107132"></p>
+<p><img src="image-20200717161233158.png" alt="image-20200717161233158"></p>
+<h4 id="2、临时启用"><a href="#2、临时启用" class="headerlink" title="2、临时启用"></a>2、临时启用</h4><p>执行<code>scl enable devtoolset-9 bash</code>以临时启用新安装的gcc，但是退出shell或重启系统会恢复为原来的gcc版本</p>
+<h4 id="3、长期启用"><a href="#3、长期启用" class="headerlink" title="3、长期启用"></a>3、长期启用</h4><p>要长期有效需要配置在环境文件<code>/etc/profeile</code>里追加一行<code>source /opt/rh/devtoolset-9/enable</code>，然后<code>source /etc/profeile</code>使其生效，最后<code>gcc -v</code>检查版本</p>
+<p><img src="image-20200717162019916.png" alt="image-20200717162019916"></p>
+<h3 id="三、安装Redis"><a href="#三、安装Redis" class="headerlink" title="三、安装Redis"></a>三、安装Redis</h3><p>接下来就可以按照<span class="exturl" data-url="aHR0cHM6Ly9yZWRpcy5pby9kb3dubG9hZA==">官网<i class="fa fa-external-link-alt"></i></span>上的说明来编译安装Redis了</p>
+<h4 id="1、下载"><a href="#1、下载" class="headerlink" title="1、下载"></a>1、下载</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-6.0.5.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200717162533467.png" alt="image-20200717162533467"></p>
+<p>虽然只有2.1M，但几十KB/s的速度还是比较慢的，也可以选择自己下载后用FTP传上去</p>
+<h4 id="2、解压缩"><a href="#2、解压缩" class="headerlink" title="2、解压缩"></a>2、解压缩</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar xzf redis-6.0.5.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p><img src="image-20200717162732596.png" alt="image-20200717162732596"></p>
+<h4 id="3、编译"><a href="#3、编译" class="headerlink" title="3、编译"></a>3、编译</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> redis-6.0.5</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>此过程比较漫长，大概需要2分钟（1核2G服务器）</p>
+<h4 id="4、启动"><a href="#4、启动" class="headerlink" title="4、启动"></a>4、启动</h4><p>在redis-6.0.5目录下执行<code>src/redis-server</code>即可，此时是前台运行状态</p>
+<p><img src="image-20200717163156041.png" alt="image-20200717163156041"></p>
+<h4 id="5、安装"><a href="#5、安装" class="headerlink" title="5、安装"></a>5、安装</h4><p>执行<code>make install</code>将src下编译好的文件安装到当前系统，就不用每次都去源码包下运行了</p>
+<p><img src="image-20200717190817928.png" alt="image-20200717190817928"></p>
+<p>安装后的路径在<code>/usr/local/bin</code>里</p>
+<h4 id="6、配置守护进程-后台运行"><a href="#6、配置守护进程-后台运行" class="headerlink" title="6、配置守护进程(后台运行)"></a>6、配置守护进程(后台运行)</h4><p>复制一份配置文件过去，不在默认的文件上修改</p>
+<p><img src="image-20200717192911600.png" alt="image-20200717192911600"></p>
+<p>在206行的位置，把no改为yes，上面的注释说：默认Redis不是以守护进程运行的，如果需要的话使用yes来开启，同时Redis会写入pid文件在/var/run/redis.pid</p>
+<p><img src="image-20200717195550732.png" alt="image-20200717195550732"></p>
+<p>此时启动Redis，记得添加配置文件为参数。然后启动redis-cli客户端程序，使用<code>ping</code>命令验通（默认链接127.0.0.1:6379）</p>
+<p><img src="image-20200717201348919.png" alt="image-20200717201348919"></p>
+<p>检查进程</p>
+<p><img src="image-20200717201714670.png" alt="image-20200717201714670"></p>
+<h4 id="7、关闭"><a href="#7、关闭" class="headerlink" title="7、关闭"></a>7、关闭</h4><p>在客户端执行<code>shutdown</code>命令关闭redis，<code>exit</code>退出客户端</p>
+<p><img src="image-20200717201815520.png" alt="image-20200717201815520"></p>
+<p>再次检查进程，服务端与客户端均已关闭</p>
+<p><img src="image-20200717201930903.png" alt="image-20200717201930903"></p>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>centos</tag>
+        <tag>redis</tag>
+      </tags>
+  </entry>
 </search>
