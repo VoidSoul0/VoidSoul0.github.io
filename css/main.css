@@ -2883,3 +2883,8 @@ ul.breadcrumb li + li:last-child {
 .post-button {
   margin-top: 30px;
 }
+p code,
+li code {
+  color: #c70000;
+  background-color: #eaeaea;
+}
