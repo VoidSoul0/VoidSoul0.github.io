@@ -361,7 +361,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>11k</span>
+              <span>12k</span>
             </span>
 
         </div>
@@ -576,8 +576,8 @@
 <td>设置列表key中index位置的值为value，当index超出范围时会返回错误</td>
 </tr>
 <tr>
-<td>`LINSERT key BEFORE</td>
-<td>AFTER pivot value`</td>
+<td><code>LINSERT key BEFORE|AFTER pivot value</code></td>
+<td>在列表指定值（pivot）的前面或后面（BEFORE|AFTER）插入一个值。pivot不存在时返回-1</td>
 </tr>
 </tbody></table>
 <p>以上命令的前缀<code>L</code>可以理解为Left，也可以理解为List，<code>R</code>则是right。所有需要位置参数（start、stop、index等）的命令，下标都为0，可以使用负数表示从尾部开始倒数。常用<code>lrange key 0 -1</code>来获取一个list的所有值</p>
@@ -759,12 +759,12 @@
 <td>返回指定的一个或多个元素的位置（经度、纬度）</td>
 </tr>
 <tr>
-<td>`GEORADIUS key longitude latitude radius m</td>
-<td>km</td>
+<td><code>GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count]</code></td>
+<td>返回指定经纬度（圆心）。不超过给定范围（半径）所有位置的元素<br />范围单位可选可选m、km、mi、ft（米、千米、英里、英尺）之一<br />WITHCOORD选项将范围内元素的经纬度一并返回<br />WITHDIST选项将范围内元素与圆点的距离一并返回<br />WITHHASH选项将经纬度经过原始 geohash 编码的有序集合分值（不常用）<br />COUNT指定前N个匹配的元素数量</td>
 </tr>
 <tr>
-<td>`GEORADIUSBYMEMBER key member radius m</td>
-<td>km</td>
+<td><code>GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count]</code></td>
+<td>用法同上，不同的是这个命令指定的是某个位置元素，而不是经纬度</td>
 </tr>
 <tr>
 <td><code>GEOHASH key member [member ...]</code></td>
@@ -826,7 +826,7 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="六、事务与乐观锁"><a href="#六、事务与乐观锁" class="headerlink" title="六、事务与乐观锁"></a>六、事务与乐观锁</h2><p>数据库事务的四大原则：<strong>ACID（原子性、一致性、隔离性、持久性）</strong>。而Redis中的事务有些不一样，原子性不是完全的；在Redis执行保存前，数据在内存中，持久性也不是完全的</p>
+<h2 id="六、事务与乐观锁"><a href="#六、事务与乐观锁" class="headerlink" title="六、事务与乐观锁"></a>六、事务与乐观锁</h2><p>数据库事务的四大原则：<strong>ACID（原子性、一致性、隔离性、持久性）</strong>。而Redis中的事务有些不一样，原子性不是完全的；在Redis执行持久化前，数据在内存中，持久性也不是完全的</p>
 <h3 id="1、Redis事务"><a href="#1、Redis事务" class="headerlink" title="1、Redis事务"></a>1、Redis事务</h3><p>Redis中的事务可以一次执行多个命令，并且有以下重要的保证：</p>
 <ul>
 <li>事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。</li>
@@ -902,16 +902,11 @@
 
 <p>这个类做了几件事：</p>
 <ul>
-<li><p>启用条件：<code>RedisOperations</code>接口类存在时（RedisTemplate和StringRedisTemplate实现了此接口）</p>
-</li>
-<li><p>开启Redis配置</p>
-</li>
-<li><p>导入Lettuce和Jedis连接配置（Jedis连接配置的启用条件是当Jedis类存在时）</p>
-</li>
-<li><p>创建了两个bean，即上述<code>RedisOperations</code>接口的两个实现类</p>
-</li>
-<li><p>设置了这两个bean的<code>redisConnectionFactory</code></p>
-</li>
+<li>启用条件：<code>RedisOperations</code>接口类存在时（RedisTemplate和StringRedisTemplate实现了此接口）</li>
+<li>开启Redis配置</li>
+<li>导入Lettuce和Jedis连接配置（Jedis连接配置的启用条件是当Jedis类存在时）</li>
+<li>创建了两个bean，即上述<code>RedisOperations</code>接口的两个实现类</li>
+<li>设置了这两个bean的<code>redisConnectionFactory</code></li>
 </ul>
 <h4 id="2-5-序列化"><a href="#2-5-序列化" class="headerlink" title="2.5 序列化"></a>2.5 序列化</h4><blockquote>
 <p>从框架的角度来看，Redis中存储的数据只有字节。虽然Redis本身支持各种类型，但在大多数情况下，这些类型指的是数据的存储方式，而不是数据所代表的内容。由用户决定是否将信息转换为字符串或任何其他对象。</p>
@@ -1038,7 +1033,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">53k</span>
+    <span title="站点总字数">54k</span>
 </div>
 
         
