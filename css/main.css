@@ -2884,7 +2884,8 @@ ul.breadcrumb li + li:last-child {
   margin-top: 30px;
 }
 p code,
-li code {
+li code,
+td code {
   color: #c70000;
   background-color: #eaeaea;
 }
